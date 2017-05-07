@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof RuntimeException && $exception->getMessage() === '[89] Invalid or expired token.') {
+        if ($this->isTokenExpired($exception)) {
             return $this->tokenExpired($request);
         }
 
@@ -68,7 +68,24 @@ class Handler extends ExceptionHandler
         return redirect()->guest(route('welcome'));
     }
 
-    public function tokenExpired($request)
+    /**
+     * Determine if token is expired.
+     *
+     * @param  \Exception  $exception
+     * @return bool
+     */
+    protected function isTokenExpired(Exception $exception)
+    {
+        return $exception instanceof RuntimeException && '[89] Invalid or expired token.' === $exception->getMessage();
+    }
+
+    /**
+     * Redirect user when token expired.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function tokenExpired($request)
     {
         $request->session()->forget(['access_token', 'user']);
 

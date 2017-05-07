@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    /**
+     * Confirm a user to authorize the app.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         Twitter::reconfig(['token' => '', 'secret' => '']);
@@ -28,6 +34,12 @@ class AuthController extends Controller
         return redirect($url);
     }
 
+    /**
+     * Handle a callback from user's authorization.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function callback(Request $request)
     {
         if ($request->session()->has('oauth_request_token')) {
@@ -41,7 +53,7 @@ class AuthController extends Controller
             }
 
             if (! isset($token['oauth_token_secret'])) {
-                return redirect()->route('auth::error')->with('message', 'error at oauth_token_secret');
+                return redirect()->route('auth::error')->with('message', 'authorization failed');
             }
 
             $credentials = Twitter::getCredentials();
@@ -67,11 +79,23 @@ class AuthController extends Controller
         return redirect()->route('auth::error')->with('message', 'something went wrong');
     }
 
+    /**
+     * Handle the error when authorize.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function error(Request $request)
     {
         return view('errors.twitter', ['message' => $request->session()->get('message')]);
     }
 
+    /**
+     * Logging out the user from app.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request)
     {
         $request->session()->forget(['access_token', 'user']);

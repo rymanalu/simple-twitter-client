@@ -55,8 +55,9 @@
         </div>
         <div class="col-md-6">
             @if ($errors->any())
-                <div class="panel panel-default">
+                <div class="panel panel-danger">
                     <div class="panel-body">
+                        <p>Oops...</p>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -72,7 +73,7 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <textarea name="tweet" class="form-control" placeholder="What's happening?"></textarea>
+                                <textarea name="tweet" class="form-control" placeholder="What's happening?" >{{ old('tweet') }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
