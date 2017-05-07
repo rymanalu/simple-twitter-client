@@ -1,0 +1,40 @@
+AuthController@login
+    getRequestToken
+        [
+            "oauth_token" => "0rJN_wAAAAAA0gp6AAABW-P7ccs",
+            "oauth_token_secret" => "FgluLijY3Jf7Fk7Ft8daFXUXT0BIZLYC",
+            "oauth_callback_confirmed" => "true",
+        ]
+
+    getAuthorizeURL
+        https://api.twitter.com/oauth/authenticate?oauth_token=6koYogAAAAAA0gp6AAABW-P81o8
+
+AuthController@callback
+    Request
+        [
+            "oauth_token" => "af_CigAAAAAA0gp6AAABW-P-yl0",
+            "oauth_verifier" => "3gqtD4bPLliW4yFNEzzbWyVemkLL77GB",
+        ]
+    getAccessToken
+        [
+            "oauth_token" => "288093955-LAogAXWGVuyIXxwdr9bEIwesHswRjhKUgSijy6G0",
+            "oauth_token_secret" => "scVP7cnoLwRiOJB1ixOmUKZkF1Sa73pomA0hUMQhnGLI9",
+            "user_id" => "288093955",
+            "screen_name" => "rymanalu",
+            "x_auth_expires" => "0",
+        ]
+
+HomeController@index
+    getHomeTimeline
+
+TweetController@store
+    uploadMedia
+        [
+            "media_id" => 861278012771151872,
+            "media_id_string" => "861278012771151872",
+            "size" => 74795,
+            "expires_after_secs" => 86400
+        ]
+
+    postTweet
+        [tweet]
