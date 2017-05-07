@@ -23,7 +23,7 @@ class AuthController extends Controller
             return redirect()->route('auth::error');
         }
 
-        $url = Twitter::getAuthorizeURL($token);
+        $url = Twitter::getAuthorizeURL($token['oauth_token']);
 
         $request->session()->put([
             'oauth_state' => 'start',
