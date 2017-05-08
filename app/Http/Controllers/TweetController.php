@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use File;
-use Twitter;
 use App\Http\Requests\TweetRequest;
+use Thujohn\Twitter\Facades\Twitter;
 
 class TweetController extends Controller
 {
