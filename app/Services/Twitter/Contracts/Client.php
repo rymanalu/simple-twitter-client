@@ -39,9 +39,9 @@ interface Client
     /**
      * Tweet a new tweet #tweetception.
      *
-     * @param  string  $tweet
+     * @param  string  $status
      * @param  array  $files
      * @return \App\Services\Twitter\Contracts\Tweet
      */
-    public function tweet($tweet, array $files = []);
+    public function tweet($status, array $files = []);
 }
