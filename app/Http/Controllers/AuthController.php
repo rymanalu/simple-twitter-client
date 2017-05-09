@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Twitter;
 use Illuminate\Http\Request;
-use Thujohn\Twitter\Facades\Twitter;
 
 class AuthController extends Controller
 {

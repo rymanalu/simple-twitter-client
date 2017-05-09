@@ -5,12 +5,21 @@ namespace App\Services\Twitter\Contracts;
 interface Client
 {
     /**
+     * Tweet a new tweet #tweetception.
+     *
+     * @param  string  $tweet
+     * @param  array  $files
+     * @return \App\Services\Twitter\Contracts\Tweet
+     */
+    public function tweet($tweet, array $files = []);
+
+    /**
      * Returns a collection of tweets.
      *
-     * @param  int  $count
+     * @param  int  $numberOfTweets
      * @return \Illuminate\Support\Collection
      */
-    public function timeline($count);
+    public function timeline($numberOfTweets);
 
     /**
      * Get the authorization url.
@@ -35,13 +44,4 @@ interface Client
      * @return array
      */
     public function getAccessToken($oauthVerifier);
-
-    /**
-     * Tweet a new tweet #tweetception.
-     *
-     * @param  string  $tweet
-     * @param  array  $files
-     * @return \App\Services\Twitter\Contracts\Tweet
-     */
-    public function tweet($tweet, array $files = []);
 }
