@@ -5,36 +5,29 @@ namespace App\Services\Twitter\Contracts;
 interface Client
 {
     /**
+     * Logging in a user.
+     *
+     * @param  string  $callbackUrl
+     * @return void
+     * @throws \RuntimeException
+     */
+    public function login($callbackUrl);
+
+    /**
+     * Logging out a user.
+     *
+     * @return void
+     * @throws \RuntimeException
+     */
+    public function logout();
+
+    /**
      * Returns a collection of tweets.
      *
      * @param  int  $count
      * @return \Illuminate\Support\Collection
      */
     public function timeline($count);
-
-    /**
-     * Get the authorization url.
-     *
-     * @param  string  $oauthToken
-     * @return string
-     */
-    public function getAuthorizeUrl($oauthToken);
-
-    /**
-     * Get the request token.
-     *
-     * @param  string  $callbackUrl
-     * @return array
-     */
-    public function getRequestToken($callbackUrl);
-
-    /**
-     * Get the access token.
-     *
-     * @param  string  $oauthVerifier
-     * @return array
-     */
-    public function getAccessToken($oauthVerifier);
 
     /**
      * Tweet a new tweet #tweetception.

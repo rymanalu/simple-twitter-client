@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Twitter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Thujohn\Twitter\Facades\Twitter;
 
 class HomeController extends Controller
 {

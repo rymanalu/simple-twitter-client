@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Twitter;
+use Exception;
 use Illuminate\Http\Request;
-use Thujohn\Twitter\Facades\Twitter;
 
 class AuthController extends Controller
 {
@@ -15,23 +16,15 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        Twitter::reconfig(['token' => '', 'secret' => '']);
+        try {
+            $url = route('auth::callback');
 
-        $token = Twitter::getRequestToken(route('auth::callback'));
+            Twitter::login($url);
 
-        if (! isset($token['oauth_token_secret'])) {
-            return redirect()->route('auth::error');
+            return redirect($url);
+        } catch (Exception $e) {
+            return redirect()->route('auth::error')->with('message', $e->getMessage());
         }
-
-        $url = Twitter::getAuthorizeURL($token['oauth_token']);
-
-        $request->session()->put([
-            'oauth_state' => 'start',
-            'oauth_request_token' => $token['oauth_token'],
-            'oauth_request_token_secret' => $token['oauth_token_secret']
-        ]);
-
-        return redirect($url);
     }
 
     /**

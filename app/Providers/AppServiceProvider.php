@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Twitter;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Twitter\Clients\Thujohn;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Twitter::setClient($this->app->make(Thujohn::class));
     }
 
     /**
