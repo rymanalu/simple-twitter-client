@@ -28,7 +28,7 @@ class TweetController extends Controller
             }
         }
 
-        Twitter::postTweet($tweet);
+        $tweet = Twitter::postTweet($tweet);
 
         return redirect()->route('home')->with('message', 'Tweet created');
     }
