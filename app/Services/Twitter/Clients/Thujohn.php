@@ -3,11 +3,9 @@
 namespace App\Services\Twitter\Clients;
 
 use Carbon\Carbon;
-use RuntimeException;
 use Thujohn\Twitter\Twitter;
 use App\Services\Twitter\Support\User;
 use App\Services\Twitter\Support\Tweet;
-use Illuminate\Contracts\Session\Session;
 use App\Services\Twitter\Contracts\Client;
 
 class Thujohn implements Client
@@ -20,59 +18,14 @@ class Thujohn implements Client
     protected $twitter;
 
     /**
-     * The session implementation.
-     *
-     * @var \Illuminate\Contracts\Session\Session
-     */
-    protected $session;
-
-    /**
      * Create a new client instance.
      *
      * @param  \Thujohn\Twitter\Twitter  $twitter
-     * @param  \Illuminate\Contracts\Session\Session  $session
      * @return void
      */
-    public function __construct(Twitter $twitter, Session $session)
+    public function __construct(Twitter $twitter)
     {
         $this->twitter = $twitter;
-    }
-
-    /**
-     * Logging in a user.
-     *
-     * @param  string  $callbackUrl
-     * @return void
-     * @throws \RuntimeException
-     */
-    public function login($callbackUrl)
-    {
-        $this->twitter->reconfig(['token' => '', 'secret' => '']);
-
-        $token = $this->twitter->getRequestToken($callbackUrl);
-
-        if (! isset($token['oauth_token_secret'])) {
-            throw new RuntimeException('Cannot request token');
-        }
-
-        $url = $this->twitter->getAuthorizeURL($token['oauth_token']);
-
-        $this->session->put([
-            'oauth_state' => 'start',
-            'oauth_request_token' => $token['oauth_token'],
-            'oauth_request_token_secret' => $token['oauth_token_secret']
-        ]);
-    }
-
-    /**
-     * Logging out a user.
-     *
-     * @return void
-     * @throws \RuntimeException
-     */
-    public function logout()
-    {
-        //
     }
 
     /**
@@ -86,6 +39,39 @@ class Thujohn implements Client
         return collect($this->twitter->getHomeTimeline(compact('count')))->transform(function ($tweet) {
             return $this->createTweet($tweet);
         });
+    }
+
+    /**
+     * Get the authorization url.
+     *
+     * @param  string  $oauthToken
+     * @return string
+     */
+    public function getAuthorizeUrl($oauthToken)
+    {
+        return $this->twitter->getAuthorizeURL($oauthToken);
+    }
+
+    /**
+     * Get the request token.
+     *
+     * @param  string  $callbackUrl
+     * @return array
+     */
+    public function getRequestToken($callbackUrl)
+    {
+        return $this->twitter->getRequestToken($callbackUrl);
+    }
+
+    /**
+     * Get the access token.
+     *
+     * @param  string  $oauthVerifier
+     * @return array
+     */
+    public function getAccessToken($oauthVerifier)
+    {
+        return $this->twitter->getAccessToken($oauthVerifier);
     }
 
     /**
