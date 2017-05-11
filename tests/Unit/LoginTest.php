@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Session;
 use Twitter;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

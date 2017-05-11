@@ -28,7 +28,7 @@ class AuthController extends Controller
         $request->session()->put([
             'oauth_state' => 'start',
             'oauth_request_token' => $token['oauth_token'],
-            'oauth_request_token_secret' => $token['oauth_token_secret']
+            'oauth_request_token_secret' => $token['oauth_token_secret'],
         ]);
 
         return redirect($url);
