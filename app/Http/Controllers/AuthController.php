@@ -20,7 +20,7 @@ class AuthController extends Controller
         $token = Twitter::getRequestToken(route('auth::callback'));
 
         if (! isset($token['oauth_token_secret'])) {
-            return redirect()->route('auth::error');
+            return redirect()->route('auth::error')->with('message', 'Failed to request token');
         }
 
         $url = Twitter::getAuthorizeURL($token['oauth_token']);
